@@ -1,0 +1,42 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+data/vector_store/
+/local_only/
+# Local environment and credentials
+.env.*
+!.env.example
+# Python and local development
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+# Generated annotation results
+/data/pipeline_runs/
+/data/orchestrator_runs/
+/data/lung_run/
+/results/
+/runs/
+# Generated evidence files
+/data/agent2_v2/panel/panel_agent1_knowledge_evidence.json
+# Large HPA archive: documented external download
+/data/reference/hpa/rna_single_cell_cluster_hpa_v25_1.tsv.zip
+# Operating system artifacts
+.DS_Store
+Thumbs.db
+
+# Keep local research datasets and generated evidence out of Git
+/data/**
+!/data/.gitkeep
+# Local research artifacts - not for repository distribution
+/notebooks/
+/experiments/
+/exports/
+/.vscode/
+*.h5ad
+*.h5mu
+*.loom
+*.h5
+*.rds
