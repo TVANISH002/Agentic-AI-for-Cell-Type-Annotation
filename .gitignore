@@ -40,3 +40,5 @@ Thumbs.db
 *.loom
 *.h5
 *.rds
+# Keep local dependency lockfile out of GitHub
+/uv.lock
