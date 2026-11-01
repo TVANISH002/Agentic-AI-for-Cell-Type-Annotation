@@ -81,31 +81,32 @@ The existing source organization is retained to preserve imports and the tested 
 ├── tests/                                   # Component tests
 ├── benchmarks/                              # Benchmark-related materials
 ├── data/                                    # Local inputs/references; excluded from Git
-├── pyproject.toml
-└── uv.lock
+└── pyproject.toml
 ```
 
 Supporting/experimental modules are retained for traceability. Their presence does **not** imply that all historical workflows are part of the validated one-command interface.
 
 ## 3. Installation and execution requirements
 
-**Software:** Python 3.11 or later (`pyproject.toml` requirement), [`uv`](https://docs.astral.sh/uv/), and the dependencies pinned by `uv.lock`. The portability/regression testing described below used Python 3.11. The dependencies include libraries for data processing and biomedical semantic models; some Agent 3 operations additionally require network access, external literature services, and model downloads.
+**Software:** Python 3.11 or later (`pyproject.toml` requirement), [`uv`](https://docs.astral.sh/uv/), and the dependencies declared in `pyproject.toml`. The portability/regression testing described below used Python 3.11. The dependencies include libraries for data processing and biomedical semantic models; some Agent 3 operations additionally require network access, external literature services, and model downloads.
 
 From the repository root, create the environment:
 
 ```powershell
-uv sync --frozen
+uv sync
 ```
+
+The project dependencies are declared in `pyproject.toml`. Running `uv sync` resolves and installs the required dependencies and generates a local `uv.lock` file. The lockfile is intentionally excluded from the repository. Consequently, dependency versions may differ between installations, and exact environment reproducibility is not guaranteed without a separately preserved dependency lock or equivalent environment record.
 
 **Before running an annotation, provide the required inputs and reference resources locally.** The repository's private GitHub version is intended to exclude the contents of `data/`; the example studies will not run on an empty-data clone without those files. See Sections 4 and 5.
 
 The **single researcher command**, after installation and configuration, is:
 
 ```powershell
-uv run --frozen python tools/run_pipeline.py --config configs/studies/breast_xenium.json
+uv run python tools/run_pipeline.py --config configs/studies/breast_xenium.json
 ```
 
-The executable interface has been tested using the repository's Python virtual environment on the original project, and the HPA-enabled wrapper has been tested in an isolated portability copy. A separate fresh-clone test of this exact `uv run --frozen` invocation should be completed before claiming that the repository runs without local setup adjustments.
+The executable interface has been tested using the repository's Python virtual environment on the original project, and the HPA-enabled wrapper has been tested in an isolated portability copy. A separate fresh-clone installation and execution test, using the repository-tracked files and separately provisioned research inputs, is required before claiming that the repository runs without local setup adjustments.
 
 ## 4. Input contract and reference resources
 
@@ -183,19 +184,19 @@ Paths for study inputs can be relative to the repository root or absolute paths 
 **Step B — Validate configuration without running agents:**
 
 ```powershell
-uv run --frozen python tools/run_pipeline.py --config configs/studies/breast_xenium.json --plan
+uv run python tools/run_pipeline.py --config configs/studies/breast_xenium.json --plan
 ```
 
 **Step C — Execute the full configured workflow with one command:**
 
 ```powershell
-uv run --frozen python tools/run_pipeline.py --config configs/studies/breast_xenium.json
+uv run python tools/run_pipeline.py --config configs/studies/breast_xenium.json
 ```
 
 A second tested example configuration is:
 
 ```powershell
-uv run --frozen python tools/run_pipeline.py --config configs/studies/lung_xenium_normal.json
+uv run python tools/run_pipeline.py --config configs/studies/lung_xenium_normal.json
 ```
 
 For a new compatible study, substitute the path to its JSON file after `--config`. The command is **not limited to a single cluster**: Agent 1, Agent 2, and Router process the supplied study evidence, and Agent 3 is invoked for clusters in the resulting escalation queue.
