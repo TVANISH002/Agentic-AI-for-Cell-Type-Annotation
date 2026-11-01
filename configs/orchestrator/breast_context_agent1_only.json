@@ -1,0 +1,23 @@
+{
+  "context_name": "breast_xenium_agent1_only",
+  "species": "Human",
+  "tissue": "Breast",
+  "disease_context": "breast cancer",
+  "platform": "Xenium",
+  "marker_file": "data/processed/brcr_top50_primary_marker_genes_by_cluster.csv",
+  "cluster_column": "spatial_cluster",
+  "gene_column": "names",
+  "output_dir": "data/pipeline_runs/breast_xenium_agent1_only",
+  "stages": [
+    {
+      "name": "agent1_panel_sources",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.build_panel_sources --panel-gene-list data/agent2_v2/panel/panel_gene_list.csv --hpa-reference data/reference/hpa/rna_single_cell_cluster_hpa_v25_1.tsv.zip --output-dir data/pipeline_runs/breast_xenium_agent1_only/agent1_sources --species Human --tissue Breast --platform Xenium --hpa-tissue breast",
+      "outputs": [
+        "data/pipeline_runs/breast_xenium_agent1_only/agent1_sources/panel_agent1_transport_input.csv",
+        "data/pipeline_runs/breast_xenium_agent1_only/agent1_sources/panel_agent1_knowledge_evidence.json",
+        "data/pipeline_runs/breast_xenium_agent1_only/agent1_sources/panel_hpa_evidence.json",
+        "data/pipeline_runs/breast_xenium_agent1_only/agent1_sources/panel_source_validation.json"
+      ]
+    }
+  ]
+}

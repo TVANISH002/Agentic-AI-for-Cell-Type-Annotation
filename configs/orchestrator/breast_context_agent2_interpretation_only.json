@@ -1,0 +1,20 @@
+{
+  "context_name": "breast_xenium_agent2_interpretation_only",
+  "species": "Human",
+  "tissue": "Breast",
+  "disease_context": "breast cancer",
+  "platform": "Xenium",
+  "marker_file": "data/processed/brcr_top50_primary_marker_genes_by_cluster.csv",
+  "cluster_column": "spatial_cluster",
+  "gene_column": "names",
+  "output_dir": "data/pipeline_runs/breast_xenium_agent2_interpretation_only",
+  "stages": [
+    {
+      "name": "agent2_marker_interpretation",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.run_all_clusters --marker-file data/processed/brcr_top50_primary_marker_genes_by_cluster.csv --panel-catalog data/pipeline_runs/breast_xenium_agent2_catalog_only/agent2_input/panel_evidence_catalog.json --output-root data/pipeline_runs/breast_xenium_agent2_interpretation_only/agent2_output --top-k 50",
+      "outputs": [
+        "data/pipeline_runs/breast_xenium_agent2_interpretation_only/agent2_output/all_clusters_threshold_candidates.csv"
+      ]
+    }
+  ]
+}

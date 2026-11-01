@@ -1,0 +1,25 @@
+{
+  "context_name": "lung_hpa_validation_clean",
+  "species": "Human",
+  "tissue": "Lung",
+  "disease_context": "lung cancer",
+  "platform": "Xenium",
+  "marker_file": "data/pipeline_runs/lung_validated_clean/processed/lung_cluster_markers_pipeline.csv",
+  "cluster_column": "cluster_id",
+  "gene_column": "gene",
+  "output_dir": "data/pipeline_runs/lung_hpa_validation_clean",
+  "stages": [
+    {
+      "name": "lung_hpa_validation",
+      "command": "uv run python -m lung_annotation_pipeline.run_hpa --markers data/pipeline_runs/lung_validated_clean/processed/lung_cluster_markers_pipeline.csv --annotations data/pipeline_runs/lung_validated_clean/final/lung_cluster_annotations_pipeline.csv --hpa data/reference/hpa/rna_single_cell_cluster_hpa_v25_1.tsv.zip --detail-output data/pipeline_runs/lung_hpa_validation_clean/hpa_output --final-output data/pipeline_runs/lung_hpa_validation_clean/final --minimum-supporting-genes 2",
+      "outputs": [
+        "data/pipeline_runs/lung_hpa_validation_clean/hpa_output/lung_hpa_gene_evidence.csv",
+        "data/pipeline_runs/lung_hpa_validation_clean/hpa_output/lung_hpa_ranked_candidate_celltypes.csv",
+        "data/pipeline_runs/lung_hpa_validation_clean/hpa_output/lung_hpa_selected_candidate_celltypes.csv",
+        "data/pipeline_runs/lung_hpa_validation_clean/hpa_output/lung_hpa_run_metadata.json",
+        "data/pipeline_runs/lung_hpa_validation_clean/final/lung_cluster_annotations_with_hpa.csv",
+        "data/pipeline_runs/lung_hpa_validation_clean/final/lung_hpa_validation_summary.csv"
+      ]
+    }
+  ]
+}

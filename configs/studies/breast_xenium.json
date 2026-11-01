@@ -1,0 +1,18 @@
+{
+    "dataset":  "brc_hpa",
+    "markers":  "data/processed/brcr_top50_primary_marker_genes_by_cluster.csv",
+    "panel":  "data/agent2_v2/panel/panel_gene_list.csv",
+    "tissue":  "Breast",
+    "platform":  "Xenium",
+    "disease_context":  "breast cancer",
+    "agent2_mode":  "general-hpa",
+    "router_config":  "configs/router/breast_router_v4.json",
+    "cell_ontology":  "data/resources/cell_ontology/v2026-06-08/cl-base.json",
+    "hpa":  {
+                "reference":  "data/reference/hpa/rna_single_cell_cluster_hpa_v25_1.tsv.zip",
+                "hpa_tissue":  "breast"
+            },
+    "supplemental_review":  true,
+    "no_expert":  false,
+    "output_parent":  "~/cell_annotation_runs"
+}

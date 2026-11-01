@@ -1,0 +1,14 @@
+{
+  "dataset": "replace_with_study_identifier",
+  "markers": "path/to/cluster_markers.csv",
+  "panel": "path/to/panel_genes.csv",
+  "tissue": "SPECIFY_TISSUE",
+  "platform": "SPECIFY_PLATFORM",
+  "disease_context": "SPECIFY_BIOLOGICAL_CONTEXT",
+  "agent2_mode": "general-marker-only",
+  "router_config": "configs/router/SELECT_VALIDATED_POLICY.json",
+  "cell_ontology": "data/resources/cell_ontology/v2026-06-08/cl-base.json",
+  "supplemental_review": true,
+  "no_expert": true,
+  "output_parent": "~/cell_annotation_runs"
+}

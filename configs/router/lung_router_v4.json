@@ -1,0 +1,23 @@
+{
+  "dataset_name": "Lung validated clean",
+  "agent2_summary_csv": "data/pipeline_runs/lung_validated_clean/agent2_output/all_clusters_summary.csv",
+  "agent2_candidates_csv": "data/pipeline_runs/lung_validated_clean/agent2_output/all_clusters_threshold_candidates.csv",
+  "output_dir": "data/pipeline_runs/lung_validated_clean/router_output_v4",
+  "min_top_support_to_accept": 6,
+  "close_candidate_ratio": 1.25,
+  "clear_candidate_ratio": 1.5,
+  "high_candidate_count": 10,
+  "high_candidate_min_support": 6,
+  "broad_label_candidate_threshold": 3,
+  "accept_score_threshold": 0.75,
+  "monitor_score_threshold": 0.55,
+  "critical_reason_count_to_route": 2,
+  "broad_label_terms": [
+    "Cancer cell",
+    "Epithelial cell",
+    "Immune cell",
+    "Lymphocyte",
+    "Myeloid cell",
+    "Stromal cell"
+  ]
+}

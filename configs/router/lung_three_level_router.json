@@ -1,0 +1,20 @@
+﻿{
+  "dataset_name": "lung_validated_clean",
+  "agent2_summary_csv": "data/pipeline_runs/lung_validated_clean/agent2_output/all_clusters_summary.csv",
+  "agent2_candidates_csv": "",
+  "output_dir": "data/pipeline_runs/lung_validated_clean/router_output_v3",
+  "min_accept_support": 4,
+  "min_route_support": 2,
+  "route_close_ratio": 1.15,
+  "monitor_close_ratio": 1.50,
+  "route_candidate_count": 20,
+  "monitor_candidate_count": 8,
+  "broad_label_terms": [
+    "Epithelial cell",
+    "Cancer cell",
+    "Immune cell",
+    "Myeloid cell",
+    "Stromal cell",
+    "Fibroblast"
+  ]
+}

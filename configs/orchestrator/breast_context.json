@@ -1,0 +1,40 @@
+{
+  "context_name": "breast_xenium",
+  "species": "Human",
+  "tissue": "Breast",
+  "disease_context": "breast cancer",
+  "platform": "Xenium",
+  "marker_file": "data/raw/cluster_marker_genes_brcr_Agentic_AI.csv",
+  "cluster_column": "spatial_cluster",
+  "gene_column": "names",
+  "output_dir": "data/orchestrator_runs/breast_xenium",
+  "stages": [
+    {
+      "name": "agent1_panel_sources",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.build_panel_sources --panel-gene-list data/agent2_v2/panel/panel_gene_list.csv --hpa-reference data/reference/hpa/rna_single_cell_cluster_hpa_v25_1.tsv.zip --output-dir data/agent2_v2/panel --species Human --tissue Breast --platform Xenium --hpa-tissue breast",
+      "outputs": [
+        "data/agent2_v2/panel/panel_agent1_transport_input.csv",
+        "data/agent2_v2/panel/panel_agent1_knowledge_evidence.json",
+        "data/agent2_v2/panel/panel_hpa_evidence.json",
+        "data/agent2_v2/panel/panel_source_validation.json"
+      ]
+    },
+    {
+      "name": "agent2_panel_catalog",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.build_panel_catalog --agent1-json data/agent2_v2/panel/panel_agent1_knowledge_evidence.json --hpa-json data/agent2_v2/panel/panel_hpa_evidence.json --panel-gene-list data/agent2_v2/panel/panel_gene_list.csv --output-json data/agent2_v2/panel/panel_evidence_catalog.json --output-csv data/agent2_v2/panel/panel_evidence_catalog.csv --unresolved-csv data/agent2_v2/unresolved/unresolved_panel_genes.csv",
+      "outputs": [
+        "data/agent2_v2/panel/panel_evidence_catalog.json",
+        "data/agent2_v2/panel/panel_evidence_catalog.csv",
+        "data/agent2_v2/unresolved/unresolved_panel_genes.csv"
+      ]
+    },
+    {
+      "name": "agent2_marker_interpretation",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.run_all_clusters --marker-file data/raw/cluster_marker_genes_brcr_Agentic_AI.csv --panel-catalog data/agent2_v2/panel/panel_evidence_catalog.json --output-root data/agent2_v2 --top-k 50",
+      "outputs": [
+        "data/agent2_v2/all_clusters_interpretation_summary.json",
+        "data/agent2_v2/all_clusters_threshold_candidates.csv"
+      ]
+    }
+  ]
+}

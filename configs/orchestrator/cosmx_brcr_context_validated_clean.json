@@ -1,0 +1,54 @@
+{
+  "context_name": "cosmx_brcr_validated_clean",
+  "species": "Human",
+  "tissue": "Breast",
+  "disease_context": "breast cancer",
+  "platform": "CosMX",
+
+  "marker_file": "data/cosmx_brcr/processed/cosmx_brcr_top50_filtered_markers_clean.csv",
+  "cluster_column": "cluster_id",
+  "gene_column": "gene",
+
+  "output_dir": "data/pipeline_runs/cosmx_brcr_orchestration_validation",
+
+  "stages": [
+    {
+      "name": "agent1_panel_sources",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.build_panel_sources --panel-gene-list data/cosmx_brcr/panel/panel_gene_list_clean.csv --hpa-reference data/reference/hpa/rna_single_cell_cluster_hpa_v25_1.tsv.zip --output-dir data/pipeline_runs/cosmx_brcr_orchestration_validation/agent1_sources --species Human --tissue Breast --platform CosMX --hpa-tissue breast",
+      "outputs": [
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/agent1_sources/panel_agent1_transport_input.csv",
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/agent1_sources/panel_agent1_knowledge_evidence.json",
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/agent1_sources/panel_hpa_evidence.json",
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/agent1_sources/panel_source_validation.json"
+      ]
+    },
+    {
+      "name": "agent2_panel_catalog",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.build_panel_catalog --agent1-json data/pipeline_runs/cosmx_brcr_orchestration_validation/agent1_sources/panel_agent1_knowledge_evidence.json --hpa-json data/pipeline_runs/cosmx_brcr_orchestration_validation/agent1_sources/panel_hpa_evidence.json --panel-gene-list data/cosmx_brcr/panel/panel_gene_list_clean.csv --output-json data/pipeline_runs/cosmx_brcr_orchestration_validation/agent2_input/panel_evidence_catalog.json --output-csv data/pipeline_runs/cosmx_brcr_orchestration_validation/agent2_input/panel_evidence_catalog.csv --unresolved-csv data/pipeline_runs/cosmx_brcr_orchestration_validation/agent2_input/unresolved_panel_genes.csv",
+      "outputs": [
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/agent2_input/panel_evidence_catalog.json",
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/agent2_input/panel_evidence_catalog.csv",
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/agent2_input/unresolved_panel_genes.csv"
+      ]
+    },
+    {
+      "name": "agent2_marker_interpretation",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.run_all_clusters --marker-file data/cosmx_brcr/processed/cosmx_brcr_top50_filtered_markers_clean.csv --panel-catalog data/pipeline_runs/cosmx_brcr_orchestration_validation/agent2_input/panel_evidence_catalog.json --output-root data/pipeline_runs/cosmx_brcr_orchestration_validation/agent2_output --species Human --tissue Breast --platform CosMX --top-k 50",
+      "outputs": [
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/agent2_output/all_clusters_summary.csv",
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/agent2_output/all_clusters_threshold_candidates.csv"
+      ]
+    },
+    {
+      "name": "router_v4",
+      "command": "uv run python -m annotation_router.runners.run_scored_router --router-config configs/router/cosmx_brcr_router_v4_orchestration_validation.json",
+      "outputs": [
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/router_output_v4/router_decisions.csv",
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/router_output_v4/router_summary.json",
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/router_output_v4/agent3_queue.csv",
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/router_output_v4/monitor_queue.csv",
+        "data/pipeline_runs/cosmx_brcr_orchestration_validation/router_output_v4/agent3_queue_if_no_expert.csv"
+      ]
+    }
+  ]
+}

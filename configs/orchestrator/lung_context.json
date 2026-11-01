@@ -1,0 +1,18 @@
+{
+  "context_name": "lung_marker_context",
+  "species": "Human",
+  "tissue": "Lung",
+  "disease_context": "lung cancer",
+  "platform": "single-cell/spatial",
+  "marker_file": "lung_cluster_markers(2).csv",
+  "cluster_column": "cluster",
+  "gene_column": "gene",
+  "max_marker_genes_per_cluster": 50,
+  "output_dir": "data/orchestrator_runs/lung_marker_context",
+  "literature_demo_cluster_ids": [],
+  "agent_commands": {
+    "agent1_biological_knowledge": "",
+    "agent2_marker_interpretation": "",
+    "agent3_literature_dry_run": ""
+  }
+}

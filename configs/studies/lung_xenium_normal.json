@@ -1,0 +1,14 @@
+{
+    "dataset":  "lung_xenium_batchcorrected_normal",
+    "markers":  "data/lung_xenium_batch_corrected/processed/normal/lung_normal_batchcorrected_top50_biological_markers.csv",
+    "panel":  "data/lung_xenium_batch_corrected/processed/normal/lung_normal_batchcorrected_biological_panel_genes.csv",
+    "tissue":  "Lung",
+    "platform":  "Xenium",
+    "disease_context":  "lung cancer",
+    "agent2_mode":  "lung-marker-only",
+    "router_config":  "configs/router/lung_normal_portable_v4.json",
+    "cell_ontology":  "data/resources/cell_ontology/v2026-06-08/cl-base.json",
+    "supplemental_review":  true,
+    "no_expert":  false,
+    "output_parent":  "~/cell_annotation_runs"
+}

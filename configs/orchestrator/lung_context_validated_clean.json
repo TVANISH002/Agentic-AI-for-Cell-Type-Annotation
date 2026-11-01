@@ -1,0 +1,52 @@
+{
+  "context_name": "lung_validated_clean",
+  "species": "Human",
+  "tissue": "Lung",
+  "disease_context": "lung cancer",
+  "platform": "Xenium",
+  "marker_file": "data/lung_run/input/lung_cluster_markers.csv",
+  "cluster_column": "cluster",
+  "gene_column": "gene",
+  "output_dir": "data/pipeline_runs/lung_validated_clean",
+  "stages": [
+    {
+      "name": "lung_prepare_input",
+      "command": "uv run python -c \"from pathlib import Path; from lung_annotation_pipeline.prepare_input import prepare_lung_input; summary = prepare_lung_input(Path('data/lung_run/input/lung_cluster_markers.csv'), Path('data/pipeline_runs/lung_validated_clean/processed/lung_cluster_markers_pipeline.csv'), Path('data/pipeline_runs/lung_validated_clean/panel/panel_gene_list.csv'), min_log2fc=0.5, max_adjusted_p_value=0.05, top_k=50); print(summary)\"",
+      "outputs": [
+        "data/pipeline_runs/lung_validated_clean/processed/lung_cluster_markers_pipeline.csv",
+        "data/pipeline_runs/lung_validated_clean/panel/panel_gene_list.csv"
+      ]
+    },
+    {
+      "name": "lung_agent1_sources",
+      "command": "uv run python -c \"from pathlib import Path; from lung_annotation_pipeline.run_agent1 import run_agent1; output = run_agent1(Path('data/pipeline_runs/lung_validated_clean/panel/panel_gene_list.csv'), Path('data/pipeline_runs/lung_validated_clean/agent1_output'), species='Human', tissue='Lung', platform='Xenium'); print(output)\"",
+      "outputs": [
+        "data/pipeline_runs/lung_validated_clean/agent1_output/panel_agent1_transport_input.csv",
+        "data/pipeline_runs/lung_validated_clean/agent1_output/panel_agent1_knowledge_evidence.json"
+      ]
+    },
+    {
+      "name": "lung_agent2_marker_interpretation",
+      "command": "uv run python -c \"from pathlib import Path; from lung_annotation_pipeline.run_agent2 import run_agent2; output = run_agent2(Path('data/pipeline_runs/lung_validated_clean/processed/lung_cluster_markers_pipeline.csv'), Path('data/pipeline_runs/lung_validated_clean/panel/panel_gene_list.csv'), Path('data/pipeline_runs/lung_validated_clean/agent1_output/panel_agent1_knowledge_evidence.json'), Path('data/pipeline_runs/lung_validated_clean'), top_k=50); print(output)\"",
+      "outputs": [
+        "data/pipeline_runs/lung_validated_clean/agent2_input/panel_evidence_catalog.csv",
+        "data/pipeline_runs/lung_validated_clean/agent2_input/panel_evidence_catalog.json",
+        "data/pipeline_runs/lung_validated_clean/agent2_input/unresolved_panel_genes.csv",
+        "data/pipeline_runs/lung_validated_clean/agent2_output/all_clusters_summary.csv",
+        "data/pipeline_runs/lung_validated_clean/final/lung_cluster_annotations_pipeline.csv",
+        "data/pipeline_runs/lung_validated_clean/agent2_output/all_clusters_threshold_candidates.csv"
+      ]
+    },
+    {
+      "name": "router_v4_scored_evidence_uncertainty",
+      "command": "uv run python src/annotation_router/runners/run_scored_router.py --router-config configs/router/lung_router_v4.json",
+      "outputs": [
+        "data/pipeline_runs/lung_validated_clean/router_output_v4/router_decisions.csv",
+        "data/pipeline_runs/lung_validated_clean/router_output_v4/monitor_queue.csv",
+        "data/pipeline_runs/lung_validated_clean/router_output_v4/agent3_queue.csv",
+        "data/pipeline_runs/lung_validated_clean/router_output_v4/agent3_queue_if_no_expert.csv",
+        "data/pipeline_runs/lung_validated_clean/router_output_v4/router_summary.json"
+      ]
+    }
+  ]
+}

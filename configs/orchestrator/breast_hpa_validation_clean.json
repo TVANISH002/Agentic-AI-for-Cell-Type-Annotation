@@ -1,0 +1,25 @@
+{
+  "context_name": "breast_hpa_validation_clean",
+  "species": "Human",
+  "tissue": "Breast",
+  "disease_context": "breast cancer",
+  "platform": "Xenium",
+  "marker_file": "data/processed/brcr_top50_primary_marker_genes_by_cluster.csv",
+  "cluster_column": "spatial_cluster",
+  "gene_column": "names",
+  "output_dir": "data/pipeline_runs/breast_hpa_validation_clean",
+  "stages": [
+    {
+      "name": "breast_hpa_validation",
+      "command": "uv run python scripts/run_breast_hpa_validation_clean.py",
+      "outputs": [
+        "data/pipeline_runs/breast_hpa_validation_clean/hpa_output/breast_hpa_gene_evidence.csv",
+        "data/pipeline_runs/breast_hpa_validation_clean/hpa_output/breast_hpa_ranked_candidate_celltypes.csv",
+        "data/pipeline_runs/breast_hpa_validation_clean/hpa_output/breast_hpa_selected_candidate_celltypes.csv",
+        "data/pipeline_runs/breast_hpa_validation_clean/hpa_output/breast_hpa_run_metadata.json",
+        "data/pipeline_runs/breast_hpa_validation_clean/final/breast_cluster_annotations_with_hpa.csv",
+        "data/pipeline_runs/breast_hpa_validation_clean/final/breast_hpa_validation_summary.csv"
+      ]
+    }
+  ]
+}

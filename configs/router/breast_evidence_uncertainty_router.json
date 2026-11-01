@@ -1,0 +1,19 @@
+﻿{
+  "dataset_name": "breast_xenium_validated_clean",
+  "agent2_summary_csv": "data/pipeline_runs/breast_xenium_validated_clean/agent2_output/all_clusters_summary.csv",
+  "agent2_candidates_csv": "data/pipeline_runs/breast_xenium_validated_clean/agent2_output/all_clusters_threshold_candidates.csv",
+  "output_dir": "data/pipeline_runs/breast_xenium_validated_clean/router_output_v2",
+  "min_top_support_to_accept": 8,
+  "close_candidate_ratio": 1.25,
+  "broad_label_candidate_threshold": 3,
+  "high_candidate_count": 10,
+  "high_candidate_min_support": 8,
+  "broad_label_terms": [
+    "Epithelial cell",
+    "Cancer cell",
+    "Immune cell",
+    "Myeloid cell",
+    "Stromal cell",
+    "Fibroblast"
+  ]
+}

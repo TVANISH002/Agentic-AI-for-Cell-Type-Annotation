@@ -1,0 +1,50 @@
+{
+  "context_name": "breast_xenium_marker_only_clean",
+  "species": "Human",
+  "tissue": "Breast",
+  "disease_context": "breast cancer",
+  "platform": "Xenium",
+  "marker_file": "data/processed/brcr_top50_primary_marker_genes_by_cluster.csv",
+  "cluster_column": "spatial_cluster",
+  "gene_column": "names",
+  "output_dir": "data/pipeline_runs/breast_xenium_marker_only_clean",
+  "stages": [
+    {
+      "name": "agent1_panel_sources_marker_only",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.build_panel_sources --panel-gene-list data/agent2_v2/panel/panel_gene_list.csv --output-dir data/pipeline_runs/breast_xenium_marker_only_clean/agent1_sources --species Human --tissue Breast --platform Xenium --hpa-tissue breast --no-hpa",
+      "outputs": [
+        "data/pipeline_runs/breast_xenium_marker_only_clean/agent1_sources/panel_agent1_transport_input.csv",
+        "data/pipeline_runs/breast_xenium_marker_only_clean/agent1_sources/panel_agent1_knowledge_evidence.json",
+        "data/pipeline_runs/breast_xenium_marker_only_clean/agent1_sources/panel_source_validation.json"
+      ]
+    },
+    {
+      "name": "agent2_panel_catalog_marker_only",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.build_panel_catalog --agent1-json data/pipeline_runs/breast_xenium_marker_only_clean/agent1_sources/panel_agent1_knowledge_evidence.json --panel-gene-list data/agent2_v2/panel/panel_gene_list.csv --output-json data/pipeline_runs/breast_xenium_marker_only_clean/agent2_input/panel_evidence_catalog.json --output-csv data/pipeline_runs/breast_xenium_marker_only_clean/agent2_input/panel_evidence_catalog.csv --unresolved-csv data/pipeline_runs/breast_xenium_marker_only_clean/agent2_input/unresolved_panel_genes.csv --marker-only",
+      "outputs": [
+        "data/pipeline_runs/breast_xenium_marker_only_clean/agent2_input/panel_evidence_catalog.json",
+        "data/pipeline_runs/breast_xenium_marker_only_clean/agent2_input/panel_evidence_catalog.csv",
+        "data/pipeline_runs/breast_xenium_marker_only_clean/agent2_input/unresolved_panel_genes.csv"
+      ]
+    },
+    {
+      "name": "agent2_marker_interpretation_marker_only",
+      "command": "uv run python -m marker_interpretation_agent_v2.runners.run_all_clusters --marker-file data/processed/brcr_top50_primary_marker_genes_by_cluster.csv --panel-catalog data/pipeline_runs/breast_xenium_marker_only_clean/agent2_input/panel_evidence_catalog.json --output-root data/pipeline_runs/breast_xenium_marker_only_clean/agent2_output --top-k 50 --no-hpa",
+      "outputs": [
+        "data/pipeline_runs/breast_xenium_marker_only_clean/agent2_output/all_clusters_summary.csv",
+        "data/pipeline_runs/breast_xenium_marker_only_clean/agent2_output/all_clusters_threshold_candidates.csv"
+      ]
+    },
+    {
+      "name": "router_v4_scored_evidence_uncertainty",
+      "command": "uv run python src/annotation_router/runners/run_scored_router.py --router-config configs/router/breast_router_v4.json",
+      "outputs": [
+        "data/pipeline_runs/breast_xenium_marker_only_clean/router_output_v4/router_decisions.csv",
+        "data/pipeline_runs/breast_xenium_marker_only_clean/router_output_v4/monitor_queue.csv",
+        "data/pipeline_runs/breast_xenium_marker_only_clean/router_output_v4/agent3_queue.csv",
+        "data/pipeline_runs/breast_xenium_marker_only_clean/router_output_v4/agent3_queue_if_no_expert.csv",
+        "data/pipeline_runs/breast_xenium_marker_only_clean/router_output_v4/router_summary.json"
+      ]
+    }
+  ]
+}
