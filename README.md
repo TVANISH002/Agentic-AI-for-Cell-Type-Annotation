@@ -79,7 +79,6 @@ The existing source organization is retained to preserve imports and the tested 
 │   └── router/                              # Study-specific Router configurations
 ├── scripts/                                 # Research runners and audits
 ├── tests/                                   # Component tests
-├── benchmarks/                              # Benchmark-related materials
 ├── data/                                    # Local inputs/references; excluded from Git
 └── pyproject.toml
 ```
@@ -106,7 +105,7 @@ The **single researcher command**, after installation and configuration, is:
 uv run python tools/run_pipeline.py --config configs/studies/breast_xenium.json
 ```
 
-The executable interface has been tested using the repository's Python virtual environment on the original project, and the HPA-enabled wrapper has been tested in an isolated portability copy. A separate fresh-clone installation and execution test, using the repository-tracked files and separately provisioned research inputs, is required before claiming that the repository runs without local setup adjustments.
+The one-command Breast Xenium workflow completed successfully in the configured original research environment, including Router-driven Agent 3 and conditional supplemental review. A fresh GitHub clone at commit `1fbd4a04eaaab03591aed803cd4eacde6d445edd` was installed on Windows using Python 3.11 and `uv sync --python 3.11 --group dev`. The researcher CLI executed successfully and all 31 automated tests passed. Full biological pipeline execution from that fresh clone with separately provisioned research inputs remains to be verified.
 
 ### Agent 3: External services and usage limitations
 
@@ -192,7 +191,7 @@ The researcher-facing interface is `tools/run_pipeline.py`. It reads a JSON file
 | `cell_ontology` | Local Cell Ontology JSON path. |
 | `hpa` | Reference/tissue settings (or existing compatible HPA evidence) for `general-hpa`. |
 | `supplemental_review` | Enables conditional supplemental processing of eligible unresolved cases. |
-| `no_expert` | Coordinator option for excluding expert-reference use; reference labels must remain separate from inference and routing. |
+| `no_expert` | Controls Agent 3 queue selection. When true, clusters marked `monitor_uncertainty` are included alongside `route_to_agent3` clusters; when false, only `route_to_agent3` clusters are escalated. This setting does not control reference-label usage. Expert/reference labels must remain separate from inference. |
 | `output_parent` | Directory for uniquely timestamped outputs **outside the repository**. |
 
 Paths for study inputs can be relative to the repository root or absolute paths on the researcher's system. On Windows, choose a short output parent path: planning mode checks the coordinator's projected 240-character downstream path limit.
@@ -277,4 +276,4 @@ When reporting an experiment, record the Git commit hash, the exact study JSON a
 
 **Current status:** private repository under manuscript preparation, accessible only to authorized collaborators. Data and external reference distributions are governed by their respective permissions and licenses. Public release, a software license, author attribution, and a paper/DOI citation will be added only after they are finalized and approved; no publication or license is asserted here.
 
-**Release note:** successful execution in the authors' configured environments does not yet constitute a verified fresh-clone installation. Before a broader release, confirm the exact one-command installation/run instructions against the Git-tracked repository with the intended empty-data layout and separately provisioned references.
+**Release note:** Fresh-clone installation, researcher CLI invocation, and 31 automated tests were verified on Windows at commit `1fbd4a04eaaab03591aed803cd4eacde6d445edd`. End-to-end Breast Xenium execution was verified in the original configured environment. Equivalent full biological execution from the fresh clone with separately provisioned research inputs remains pending. These engineering checks do not establish independent biological accuracy or generalization to arbitrary tissues.
