@@ -1,0 +1,3 @@
+dataset,role,label_source,independent_reference,notes
+breast,UNASSIGNED_CURRENT_ENGINEERING,expert,yes,Current 7 eligible targets; do not assign final role until additional independent datasets are available.
+lung,UNLABELED_COMPARISON_ONLY,LLM comparison annotation,no,Must not be used as Router ground truth.

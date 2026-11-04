@@ -1,0 +1,21 @@
+dataset,cluster_id,primary_reference_label,primary_reference_type,use_for_primary_accuracy,llm_label,use_for_llm_agreement
+breast,0,Invasive tumor,biology_expert,True,Luminal epithelial tumor cells,True
+breast,1,Macrophage,biology_expert,True,Macrophages (TAM/M2-like),True
+breast,2,Stromal,biology_expert,True,Cancer-associated fibroblasts (CAF),True
+breast,3,Lymphocytes,biology_expert,True,T cells,True
+breast,4,Endothelial,biology_expert,True,Endothelial cells,True
+breast,5,Myoepithelial,biology_expert,True,Myoepithelial cells,True
+breast,6,Plasma cells,biology_expert,True,Plasma cells,True
+breast,7,Mast cells,biology_expert,True,Mast cells,True
+lung,0,,,False,Epithelial cells,True
+lung,1,,,False,T cells,True
+lung,2,,,False,Myeloid cells,True
+lung,3,,,False,Stromal cells,True
+lung,4,,,False,Endothelial cells,True
+lung,5,,,False,Plasma cells,True
+lung,6,,,False,B cells,True
+lung,7,,,False,Macrophages,True
+lung,8,,,False,Endothelial cells,True
+lung,9,,,False,Mast cells,True
+lung,10,,,False,Lymphatic endothelial cells,True
+lung,11,,,False,Monocytes,True
