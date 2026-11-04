@@ -108,6 +108,22 @@ uv run python tools/run_pipeline.py --config configs/studies/breast_xenium.json
 
 The executable interface has been tested using the repository's Python virtual environment on the original project, and the HPA-enabled wrapper has been tested in an isolated portability copy. A separate fresh-clone installation and execution test, using the repository-tracked files and separately provisioned research inputs, is required before claiming that the repository runs without local setup adjustments.
 
+### Agent 3: External services and usage limitations
+
+Agent 3 uses external biomedical services for literature retrieval, gene terminology, and semantic evidence ranking. These resources serve different purposes and have specific access limitations.
+
+**Hugging Face and PubMedBERT.** Agent 3 uses the pretrained [`NeuML/pubmedbert-base-embeddings`](https://huggingface.co/NeuML/pubmedbert-base-embeddings) model for semantic reranking of retrieved literature evidence. The standardized workflow does not use a generative LLM for annotation. The public model can generally be accessed without an `HF_TOKEN`, although Hugging Face may display an unauthenticated-access warning and apply lower request limits. Researchers may configure their own token if needed. Authentication credentials must never be committed to Git. A successful cached model load does not independently verify a fresh-machine download.
+
+**NCBI Gene terminology.** Agent 3 uses NCBI Gene E-utilities to retrieve official gene symbols and alternative gene terminology for marker-evidence analysis. NCBI's default unauthenticated E-utilities limit is three requests per second per IP address; the default limit with an API key is ten requests per second. NCBI also recommends providing application identification through `tool` and `email` parameters.
+
+The current implementation includes a 0.4-second delay between marker lookups and records fallback information when an exact NCBI Gene match cannot be obtained. This delay is not a strict request-level or IP-wide rate limiter, and the implementation does not currently configure NCBI `tool` and `email` request parameters. Larger or concurrent workloads may require additional request management. An NCBI API key is not mandatory for the current small-scale workflow.
+
+**Europe PMC.** Agent 3 retrieves biomedical literature through Europe PMC. Retrieval depends on network and service availability, and results may change as the literature is updated.
+
+**Reproducibility.** Researchers should record model identifiers and revisions, retrieval settings, external-resource versions, NCBI gene-resolution statuses, and execution manifests. PubMedBERT semantic similarity is not biological annotation confidence, and successful workflow execution does not establish independently validated annotation accuracy.
+
+References: [NCBI E-utilities documentation](https://www.ncbi.nlm.nih.gov/books/NBK25497/) and [Hugging Face Hub rate limits](https://huggingface.co/docs/hub/rate-limits).
+
 ## 4. Input contract and reference resources
 
 The entry point accepts **prepared CSV inputs** with an explicit study configuration.
