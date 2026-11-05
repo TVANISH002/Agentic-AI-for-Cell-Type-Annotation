@@ -97,7 +97,7 @@ uv sync
 
 The project dependencies are declared in `pyproject.toml`. Running `uv sync` resolves and installs the required dependencies and generates a local `uv.lock` file. The lockfile is intentionally excluded from the repository. Consequently, dependency versions may differ between installations, and exact environment reproducibility is not guaranteed without a separately preserved dependency lock or equivalent environment record.
 
-**Before running an annotation, provide the required inputs and reference resources locally.** The repository's private GitHub version is intended to exclude the contents of `data/`; the example studies will not run on an empty-data clone without those files. See Sections 4 and 5.
+**Before running an annotation, provide the required inputs and reference resources locally.** The repository excludes the contents of `data/` except for `data/.gitkeep`; the example studies will not run on an empty-data clone without those files. See Sections 4 and 5.
 
 The **single researcher command**, after installation and configuration, is:
 
@@ -173,7 +173,7 @@ KRT8
 PTPRC
 ```
 
-**Data availability and privacy.** The GitHub upload is intended to contain an **empty `data/` directory** (for example, retained via `data/.gitkeep`), not the local confidential inputs, historical outputs, model caches, or downloaded reference archives. Existing research data can remain in the authors' local archive; excluding them from Git does not delete them. The publication inventory must be checked to ensure that *all* private data are excluded, not just selected subfolders. Users must supply their own authorized compatible inputs and references.
+**Data availability and external resources.** The repository tracks only `data/.gitkeep` under `data/`; locally held research inputs, historical outputs, model caches, and downloaded reference archives are not distributed with the source code. Existing research data can remain in local archives; excluding them from Git does not delete them. Before contributing files, verify that restricted datasets, credentials, and non-redistributable resources remain excluded. Users must supply their own authorized compatible inputs and references.
 
 ## 5. Configuring a study and running the pipeline
 
@@ -258,13 +258,13 @@ Additional integration evidence:
 
 The tests above support **implementation reproducibility and conditional workflow execution**. They do **not** establish annotation accuracy, calibration, novel biological discovery, state-of-the-art performance, or generalization to arbitrary tissues. Development cases and historical comparisons must not be described as independent validation. Expert/reference labels are for evaluation and should not be used in inference-time routing or annotation decisions.
 
-For a publication-quality evaluation on additional studies, separately document dataset identity/accession, training/development versus independent evaluation partitions, reference label harmonization, biological baselines, uncertainty/abstention behavior, resources/models with exact versions, and end-to-end outcomes. Private test artifacts are not automatically included in this repository.
+For a publication-quality evaluation on additional studies, separately document dataset identity/accession, training/development versus independent evaluation partitions, reference label harmonization, biological baselines, uncertainty/abstention behavior, resources/models with exact versions, and end-to-end outcomes. Local test artifacts are not automatically included in this repository.
 
 ## 8. Troubleshooting and reproducibility checklist
 
 | Symptom | Action |
 | --- | --- |
-| Missing input or reference file | Supply the authorized file locally and adjust the relevant JSON path. The private repository intentionally excludes local `data/` contents. |
+| Missing input or reference file | Supply the authorized file locally and adjust the relevant JSON path. The repository intentionally excludes local `data/` contents. |
 | Long Windows output path | Set a shorter `output_parent` outside the repository; rerun `--plan`. |
 | Agent 3 not invoked | Inspect `pipeline/router/agent3_queue.csv`. An empty queue correctly skips it. |
 | Literature retrieval or model errors | Check `pipeline/logs/` and `run_manifest.json`; network access and model availability may be required. |
@@ -272,8 +272,8 @@ For a publication-quality evaluation on additional studies, separately document 
 
 When reporting an experiment, record the Git commit hash, the exact study JSON and Router policy, marker/panel file hashes, reference-database and Cell Ontology versions, biomedical model identifiers and versions, retrieval settings, the Python/environment dependency lock, evaluation protocol, and the run manifest. Do not report PubMedBERT similarity or a Router evidence score as a biological probability.
 
-## 9. Availability, publication, and licensing
+## 9. Availability and licensing
 
-**Current status:** private repository under manuscript preparation, accessible only to authorized collaborators. Data and external reference distributions are governed by their respective permissions and licenses. Public release, a software license, author attribution, and a paper/DOI citation will be added only after they are finalized and approved; no publication or license is asserted here.
+**Current status:** This repository is publicly accessible as research software. Data and external reference distributions are governed by their respective permissions and licenses. Public source-code availability does not itself grant reuse or redistribution rights; consult the repository for applicable software licensing terms.
 
 **Release note:** Fresh-clone installation, researcher CLI invocation, and 31 automated tests were verified on Windows at commit `1fbd4a04eaaab03591aed803cd4eacde6d445edd`. End-to-end Breast Xenium execution was verified in the original configured environment. These engineering checks do not establish independent biological accuracy or generalization to arbitrary tissues.
