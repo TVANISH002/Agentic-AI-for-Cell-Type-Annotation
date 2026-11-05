@@ -105,7 +105,7 @@ The **single researcher command**, after installation and configuration, is:
 uv run python tools/run_pipeline.py --config configs/studies/breast_xenium.json
 ```
 
-The one-command Breast Xenium workflow completed successfully in the configured original research environment, including Router-driven Agent 3 and conditional supplemental review. A fresh GitHub clone at commit `1fbd4a04eaaab03591aed803cd4eacde6d445edd` was installed on Windows using Python 3.11 and `uv sync --python 3.11 --group dev`. The researcher CLI executed successfully and all 31 automated tests passed. Full biological pipeline execution from that fresh clone with separately provisioned research inputs remains to be verified.
+The one-command Breast Xenium workflow completed successfully in the configured original research environment, including Router-driven Agent 3 and conditional supplemental review. A fresh GitHub clone at commit `1fbd4a04eaaab03591aed803cd4eacde6d445edd` was installed on Windows using Python 3.11 and `uv sync --python 3.11 --group dev`. The researcher CLI executed successfully and all 31 automated tests passed.
 
 ### Agent 3: External services and usage limitations
 
@@ -276,4 +276,4 @@ When reporting an experiment, record the Git commit hash, the exact study JSON a
 
 **Current status:** private repository under manuscript preparation, accessible only to authorized collaborators. Data and external reference distributions are governed by their respective permissions and licenses. Public release, a software license, author attribution, and a paper/DOI citation will be added only after they are finalized and approved; no publication or license is asserted here.
 
-**Release note:** Fresh-clone installation, researcher CLI invocation, and 31 automated tests were verified on Windows at commit `1fbd4a04eaaab03591aed803cd4eacde6d445edd`. End-to-end Breast Xenium execution was verified in the original configured environment. Equivalent full biological execution from the fresh clone with separately provisioned research inputs remains pending. These engineering checks do not establish independent biological accuracy or generalization to arbitrary tissues.
+**Release note:** Fresh-clone installation, researcher CLI invocation, and 31 automated tests were verified on Windows at commit `1fbd4a04eaaab03591aed803cd4eacde6d445edd`. End-to-end Breast Xenium execution was verified in the original configured environment. These engineering checks do not establish independent biological accuracy or generalization to arbitrary tissues.
